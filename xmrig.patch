@@ -1,31 +1,13 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 37e235ca..512dcc71 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -216,8 +216,9 @@ if (WITH_DEBUG_LOG)
-     add_definitions(/DAPP_DEBUG)
- endif()
- 
--add_executable(${CMAKE_PROJECT_NAME} ${HEADERS} ${SOURCES} ${SOURCES_OS} ${HEADERS_CRYPTO} ${SOURCES_CRYPTO} ${SOURCES_SYSLOG} ${TLS_SOURCES} ${XMRIG_ASM_SOURCES})
--target_link_libraries(${CMAKE_PROJECT_NAME} ${XMRIG_ASM_LIBRARY} ${OPENSSL_LIBRARIES} ${UV_LIBRARIES} ${EXTRA_LIBS} ${CPUID_LIB} ${ARGON2_LIBRARY} ${ETHASH_LIBRARY})
-+# add_executable(xmrigexe ${HEADERS} ${SOURCES} ${SOURCES_OS} ${HEADERS_CRYPTO} ${SOURCES_CRYPTO} ${SOURCES_SYSLOG} ${TLS_SOURCES} ${XMRIG_ASM_SOURCES})
-+# target_link_libraries(xmrigexe ${XMRIG_ASM_LIBRARY} ${OPENSSL_LIBRARIES} ${UV_LIBRARIES} ${EXTRA_LIBS} ${CPUID_LIB} ${ARGON2_LIBRARY} ${ETHASH_LIBRARY})
-+add_library(xmrig STATIC ${HEADERS} ${SOURCES} ${SOURCES_OS} ${HEADERS_CRYPTO} ${SOURCES_CRYPTO} ${SOURCES_SYSLOG} ${TLS_SOURCES} ${XMRIG_ASM_SOURCES})
- 
- if (WIN32)
-     add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/bin/WinRing0/WinRing0x64.sys" $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>)
 diff --git a/src/xmrig.cpp b/src/xmrig.cpp
-index 07f18e37..e141f84e 100644
+index 07f18e37..1c5301bc 100644
 --- a/src/xmrig.cpp
 +++ b/src/xmrig.cpp
-@@ -26,8 +26,8 @@
- #include "base/kernel/Entry.h"
+@@ -27,7 +27,7 @@
  #include "base/kernel/Process.h"
  
--
+ 
 -int main(int argc, char **argv) {
-+extern "C" int xmrig_main(int argc, char **argv)
-+{
++extern "C" int xmrig_main(int argc,char **argv) {
      using namespace xmrig;
  
      Process process(argc, argv);
