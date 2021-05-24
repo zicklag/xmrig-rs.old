@@ -1,8 +1,7 @@
 use std::os::raw::*;
 
-
 extern "C" {
-    pub fn xmrig_main(argc: c_int, argv: *mut *mut c_char) -> c_int;
+    pub fn xmrig_main(argc: c_int, argv: *mut c_char) -> c_int;
 }
 
 /// Starts `xmrig` exactly as it would be run on the command-line without any arguments
